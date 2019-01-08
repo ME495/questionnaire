@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    method = 1;
+    function show_image() {
+      $.post("ShowImage", {}, function (data, status) {
+        if (status=="success") {
+          $("#res1").attr("style", "border: 5px solid red; width:120px;height:150px");
+          $("#res2").attr("style", "border: 5px solid white; width:120px;height:150px")
+          path_method1 = "images/method_1/"+data+".png";
+          path_method2 = "images/method_2/"+data+".png";
+          path_photo = "images/photos/"+data+".jpg";
+          path_sketch = "images/sketches/"+data+".jpg";
+          $("#res1").attr("src", path_method1);
+          $("#res2").attr("src", path_method2);
+          $("#photo").attr("src", path_photo);
+          $("#sketch").attr("src", path_sketch);
+          $("#display").attr("src", path_method1);
+          percent = parseInt(parseFloat(data)*100/30.0);
+          st = Math.max(10, percent)+"%";
+          $(".progress-bar").attr("style", "width: "+st);
+          $("#percent").html(percent+"%");
+        }
+      })
+    }
+
+    function save_result() {
+      $.post("SaveResult", {"method": method}, function (data, status) {
+        if (status=="success") {
+          console.log(data);
+          if (data=="continue") {
+            show_image();
+          } else {
+            alert("谢谢填写！");
+            window.location.href = "../index.jsp";
+          }
+        }
+      });
+    }
+
+    $(document).ready(function () {
+      show_image();
+
+      $(".thumb").click(function () {
+        elem1 = "#" + $(this).attr("id")
+        if (elem1=="#res1") {
+          elem2 = "#res2";
+          method = 1;
+        } else {
+          elem2 = "#res1";
+          method = 2;
+        }
+        $(elem1).attr("style", "border: 5px solid red; width:120px;height:150px");
+        $(elem2).attr("style", "border: 5px solid white; width:120px;height:150px");
+        $("#display").attr("src", $(this).attr("src"));
+      });
+
+      $("#submit").click(save_result);
+    });
+  </script>
+  <title>Title</title>
+</head>
+<body>
+<div class="container">
+  <br><br>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      文本1
+    </div>
+    <div class="panel-body" style="background-color: lightgrey">
+      <table border="0px" align="center" >
+        <tr>
+          <td><div align="center"><img src="images/method_1/1.png" id="res1" class="thumb" style="border: 5px solid red; width:120px;height:150px" /></div></td>
+          <td><div align="center"><img src="images/method_2/1.png" id="res2" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
+        </tr>
+        <tr>
+          <td><div align="center">1</div></td>
+          <td><div align="center">2</div></td>
+        </tr>
+      </table>
+      <p class="text-center">文本2 </p>
+      <table border="0px" align="center" cellspacing="10px">
+        <tr>
+          <td><img id="sketch" src="images/sketches/1.jpg" style="border: 5px solid white;width:200px;height:250px"></td>
+          <td><img id="photo" src="images/photos/1.jpg" style="border: 5px solid white;width:200px;height:250px"></td>
+          <td><img id="display" src="images/method_1/1.png" name="display" style="border: 5px solid white;width:200px;height:250px "></td>
+        </tr>
+        <tr>
+          <td><div align="center">Source</div></td>
+          <td><div align="center">Style Reference (GT)</div></td>
+          <td><div align="center">Stylized</div></td>
+        </tr>
+      </table>
+      <br><br>
+      <div class="text-center"><button id="submit" type="button" class="btn btn-primary">下一页</button></div>
+      <br><br>
+      <div class="col-xs-offset-3 col-xs-6">
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" role="progressbar"
+               aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+               style="width: 0%;">
+            <span id="percent"></span>
+          </div>
+        </div>
+      </div>
+      <br><br>
+    </div>
+  </div>
+</div>
+</body>
+</html>
