@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    method = 1
+
+    $(document).ready(function () {
+
+      $(".thumb").click(function () {
+        elem1 = "#" + $(this).attr("id")
+        if (elem1=="#res1") {
+          elem2 = "#res2";
+          method = 1;
+        } else {
+          elem2 = "#res1";
+          method = 2;
+        }
+        $(elem1).attr("style", "border: 5px solid red; width:120px;height:150px");
+        $(elem2).attr("style", "border: 5px solid white; width:120px;height:150px");
+        $("#display").attr("src", $(this).attr("src"));
+      });
+
+      $("#submit").click(function () {
+        if (method==1) {
+          $("#correct_modal").modal("show");
+        } else {
+          $("#error_modal").modal("show");
+        }
+      });
+
+      $("#welcome_modal").modal("show");
+
+      $("#correct_modal").click(function () {
+        window.location.href = "survey.html";
+      });
+    });
+  </script>
+  <title>Title</title>
+</head>
+<body>
+<div class="container">
+  <br><br>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      文本1
+    </div>
+    <div class="panel-body" style="background-color: lightgrey">
+      <table border="0px" align="center" >
+        <tr>
+          <td><div align="center"><img src="images/method1.png" id="res1" class="thumb" style="border: 5px solid red; width:120px;height:150px" /></div></td>
+          <td><div align="center"><img src="images/method2.png" id="res2" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
+        </tr>
+        <tr>
+          <td><div align="center">1</div></td>
+          <td><div align="center">2</div></td>
+        </tr>
+      </table>
+      <p class="text-center">文本2 </p>
+      <table border="0px" align="center" cellspacing="10px">
+        <tr>
+          <td><img id="sketch" src="images/sketch.jpg" style="border: 5px solid white;width:200px;height:250px"></td>
+          <td><img id="photo" src="images/photo.jpg" style="border: 5px solid white;width:200px;height:250px"></td>
+          <td><img id="display" src="images/method1.png" name="display" style="border: 5px solid white;width:200px;height:250px "></td>
+        </tr>
+        <tr>
+          <td><div align="center">Source</div></td>
+          <td><div align="center">Style Reference (GT)</div></td>
+          <td><div align="center">Stylized</div></td>
+        </tr>
+      </table>
+      <br><br>
+      <div class="text-center"><button id="submit" type="button" class="btn btn-primary">下一页</button></div>
+      <br><br>
+    </div>
+  </div>
+
+  <!-- 欢迎模态框 -->
+  <div class="modal fade" id="welcome_modal" tabindex="-1" role="dialog" aria-labelledby="welcome_modal_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="welcome_modal_label">欢迎！</h4>
+        </div>
+        <div class="modal-body">在这里添加一些文本</div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+
+  <!-- 错误模态框 -->
+  <div class="modal fade" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="error_modal_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="error_modal_label">选择错误</h4>
+        </div>
+        <div class="modal-body">在这里添加一些文本</div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+
+  <!-- 正确模态框 -->
+  <div class="modal fade" id="correct_modal" tabindex="-1" role="dialog" aria-labelledby="correct_modal_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="correct_modal_label">选择正确</h4>
+        </div>
+        <div class="modal-body">在这里添加一些文本</div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+</div>
+</body>
+</html>
