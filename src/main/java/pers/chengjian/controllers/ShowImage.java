@@ -30,7 +30,6 @@ public class ShowImage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int index = (int) session.getAttribute("index");
-		System.out.println(index);
 		PrintWriter out = response.getWriter();
 		out.print(index);
 	}

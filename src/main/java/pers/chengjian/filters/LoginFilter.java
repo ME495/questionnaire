@@ -37,9 +37,7 @@ public class LoginFilter implements Filter {
 		// place your code here
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		System.out.println(httpRequest.getRequestURL());
 		if (httpRequest.getSession().getAttribute("age")!=null) {
-			System.out.println("ok");
 			chain.doFilter(request, response);
 		} else {
 			HttpServletResponse httpResponse = (HttpServletResponse) response;

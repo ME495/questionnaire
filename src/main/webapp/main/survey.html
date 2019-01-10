@@ -10,12 +10,14 @@
   <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
-    method = 1;
+    method = 0;
+    index = 0;
     function show_image() {
       $.post("ShowImage", {}, function (data, status) {
         if (status=="success") {
-          $("#res1").attr("style", "border: 5px solid red; width:120px;height:150px");
-          $("#res2").attr("style", "border: 5px solid white; width:120px;height:150px")
+          $("#res1").attr("style", "border: 5px solid white; width:120px;height:150px");
+          $("#res2").attr("style", "border: 5px solid white; width:120px;height:150px");
+          $("#submit").attr("disabled", true);
           path_method1 = "images/method_1/"+data+".png";
           path_method2 = "images/method_2/"+data+".png";
           path_photo = "images/photos/"+data+".jpg";
@@ -25,6 +27,7 @@
           $("#photo").attr("src", path_photo);
           $("#sketch").attr("src", path_sketch);
           $("#display").attr("src", path_method1);
+          index = parseInt(data);
           percent = parseInt(parseFloat(data)*100/30.0);
           st = Math.max(10, percent)+"%";
           $(".progress-bar").attr("style", "width: "+st);
@@ -41,7 +44,7 @@
             show_image();
           } else {
             alert("谢谢填写！");
-            window.location.href = "../index.jsp";
+            window.location.href = "../index.html";
           }
         }
       });
@@ -51,6 +54,7 @@
       show_image();
 
       $(".thumb").click(function () {
+        $("#submit").attr("disabled", false);
         elem1 = "#" + $(this).attr("id")
         if (elem1=="#res1") {
           elem2 = "#res2";
@@ -64,7 +68,12 @@
         $("#display").attr("src", $(this).attr("src"));
       });
 
-      $("#submit").click(save_result);
+      $("#submit").click(function () {
+        if (index==30) {
+          $("#submit").unbind("click");
+        }
+        save_result();
+      });
     });
   </script>
   <title>Title</title>
@@ -74,12 +83,12 @@
   <br><br>
   <div class="panel panel-default">
     <div class="panel-heading">
-      文本1
+      点击第一行的缩略图，它将显示在第二行的合成照片中。基于样式相似性和质量选择你喜欢的结果，然后单击“下一页”提交并继续。
     </div>
     <div class="panel-body" style="background-color: lightgrey">
       <table border="0px" align="center" >
         <tr>
-          <td><div align="center"><img src="images/method_1/1.png" id="res1" class="thumb" style="border: 5px solid red; width:120px;height:150px" /></div></td>
+          <td><div align="center"><img src="images/method_1/1.png" id="res1" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
           <td><div align="center"><img src="images/method_2/1.png" id="res2" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
         </tr>
         <tr>
@@ -87,7 +96,7 @@
           <td><div align="center">2</div></td>
         </tr>
       </table>
-      <p class="text-center">文本2 </p>
+      <p class="text-center">选择最接近照片的结果 </p>
       <table border="0px" align="center" cellspacing="10px">
         <tr>
           <td><img id="sketch" src="images/sketches/1.jpg" style="border: 5px solid white;width:200px;height:250px"></td>
@@ -95,13 +104,13 @@
           <td><img id="display" src="images/method_1/1.png" name="display" style="border: 5px solid white;width:200px;height:250px "></td>
         </tr>
         <tr>
-          <td><div align="center">Source</div></td>
-          <td><div align="center">Style Reference (GT)</div></td>
-          <td><div align="center">Stylized</div></td>
+          <td><div align="center">素描</div></td>
+          <td><div align="center">参考照片</div></td>
+          <td><div align="center">合成照片</div></td>
         </tr>
       </table>
       <br><br>
-      <div class="text-center"><button id="submit" type="button" class="btn btn-primary">下一页</button></div>
+      <div class="text-center"><button id="submit" type="button" class="btn btn-primary" disabled="disabled">下一页</button></div>
       <br><br>
       <div class="col-xs-offset-3 col-xs-6">
         <div class="progress">

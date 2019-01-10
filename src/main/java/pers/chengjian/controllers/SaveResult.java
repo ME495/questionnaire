@@ -68,7 +68,7 @@ public class SaveResult extends HttpServlet {
 		result.add(Integer.valueOf(method));
 		++index;
 		System.out.println("SaveResult: "+index);
-		if (index>3) {
+		if (index>30) {
 			try {
 				saveResult(session);
 			} catch (SQLException e) {

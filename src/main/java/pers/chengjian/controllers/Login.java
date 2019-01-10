@@ -37,7 +37,7 @@ public class Login extends HttpServlet {
 		session.setAttribute("experience", experience);
 		session.setAttribute("index", 1);
 		session.setAttribute("result", new ArrayList<Integer>());
-		response.sendRedirect("main/welcome.html");
+		response.sendRedirect("main/survey.html");
 	}
 
 	/**

@@ -11,6 +11,43 @@
   <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <script>
+    function check_age() {
+      age = parseInt($("#age").val().trim());
+      if (isNaN(age) || age<0 || age>200) {
+        return false;
+      }
+      return true;
+    }
+    function check() {
+      flag = true;
+      if ($("input:radio[name='sex']:checked").val()==null) {
+        flag = false;
+        $("#sex_warning").attr("hidden", false);
+      }
+      if (!check_age()) {
+        flag = false;
+        $("#age_warning").attr("hidden", false);
+      }
+      if ($("#experience option:selected").val().trim()=="Empty") {
+        flag = false;
+        $("#experience_warning").attr("hidden", false);
+      }
+      return flag;
+    }
+
+    $(document).ready(function () {
+      $("input:radio").click(function () {
+        $("#sex_warning").attr("hidden", true);
+      });
+      $("#age").focus(function () {
+        $("#age_warning").attr("hidden", true);
+      });
+      $("#experience").click(function () {
+        $("#experience_warning").attr("hidden", true);
+      });
+    });
+  </script>
   <title>用户信息</title>
 </head>
 <body>
@@ -22,28 +59,32 @@
     </div>
     <div class="'panel-body">
       <div class="container">
-        <form method="post" action="Login">
+        <form method="post" onsubmit="return check()" action="Login">
           <div class="row">
             <label>性别：</label>
-            <input type="radio" name="sex" value="male" checked>男
+            <input type="radio" name="sex" value="male">男
             <input type="radio" name="sex" value="female">女
+            <label id="sex_warning" style="color: red" hidden>请选择性别！</label>
           </div>
           <br><br>
           <div class="row">
             <label>年龄：</label>
-            <input type="text" name="age" value="20">
+            <input type="text" id="age" name="age">
+            <label id="age_warning" style="color: red" hidden>请填写正确的年龄！</label>
           </div>
           <br><br>
           <div class="row">
             <label>请评价你在计算机图形或图像处理方面的经验?</label>
           </div>
           <div class="row">
-            <select name="experience">
+            <select name="experience" id="experience">
+              <option value="Empty">--请选择--</option>
               <option value="NoExperience">无经验</option>
               <option value="Beginner">初级</option>
               <option value="Intermediate">中级</option>
               <option value="Advanced">高级</option>
             </select>
+            <label id="experience_warning" style="color: red" hidden>请选择！</label>
           </div>
           <br><br>
           <div class="row">
