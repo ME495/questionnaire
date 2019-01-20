@@ -12,16 +12,23 @@
   <script>
     method = 0;
     index = 0;
+    function padding(num, length) {
+      for(var len = (num + "").length; len < length; len = num.length) {
+        num = "0" + num;
+      }
+      return num;
+    }
+
     function show_image() {
       $.post("ShowImage", {}, function (data, status) {
         if (status=="success") {
           $("#res1").attr("style", "border: 5px solid white; width:120px;height:150px");
           $("#res2").attr("style", "border: 5px solid white; width:120px;height:150px");
           $("#submit").attr("disabled", true);
-          path_method1 = "images/method_1/"+data+".png";
-          path_method2 = "images/method_2/"+data+".png";
-          path_photo = "images/photos/"+data+".jpg";
-          path_sketch = "images/sketches/"+data+".jpg";
+          path_method1 = "images/method_1/"+padding(data, 5) +".png";
+          path_method2 = "images/method_2/"+padding(data, 5) +".png";
+          path_photo = "images/photos/"+padding(data, 5) +".png";
+          path_sketch = "images/sketches/"+ padding(data, 5) +".png";
           $("#res1").attr("src", path_method1);
           $("#res2").attr("src", path_method2);
           $("#photo").attr("src", path_photo);
@@ -88,8 +95,8 @@
     <div class="panel-body" style="background-color: lightgrey">
       <table border="0px" align="center" >
         <tr>
-          <td><div align="center"><img src="images/method_1/1.png" id="res1" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
-          <td><div align="center"><img src="images/method_2/1.png" id="res2" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
+          <td><div align="center"><img src="images/method_1/00001.png" id="res1" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
+          <td><div align="center"><img src="images/method_2/00001.png" id="res2" class="thumb" style="border: 5px solid white; width:120px;height:150px" /></div></td>
         </tr>
         <tr>
           <td><div align="center">1</div></td>
@@ -99,9 +106,9 @@
       <p class="text-center">选择最接近照片的结果 </p>
       <table border="0px" align="center" cellspacing="10px">
         <tr>
-          <td><img id="sketch" src="images/sketches/1.jpg" style="border: 5px solid white;width:200px;height:250px"></td>
-          <td><img id="photo" src="images/photos/1.jpg" style="border: 5px solid white;width:200px;height:250px"></td>
-          <td><img id="display" src="images/method_1/1.png" name="display" style="border: 5px solid white;width:200px;height:250px "></td>
+          <td><img id="sketch" src="images/sketches/00001.png" style="border: 5px solid white;width:200px;height:250px"></td>
+          <td><img id="photo" src="images/photos/00001.png" style="border: 5px solid white;width:200px;height:250px"></td>
+          <td><img id="display" src="images/method_1/00001.png" name="display" style="border: 5px solid white;width:200px;height:250px "></td>
         </tr>
         <tr>
           <td><div align="center">素描</div></td>

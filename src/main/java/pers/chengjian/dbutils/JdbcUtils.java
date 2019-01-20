@@ -32,6 +32,9 @@ public class JdbcUtils {
 		password = properties.getProperty("password");
 		driver = properties.getProperty("driver");
 		url = properties.getProperty("url");
+//		System.out.println(url);
+//		System.out.println(username);
+//		System.out.println(password);
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
@@ -62,7 +65,6 @@ public class JdbcUtils {
         int result = -1;// 表示当用户执行增加删除和修改的操作影响的行数  
         int index = 1; // 表示 占位符 ，从1开始  
         try {
-        	getConnection();
 			pstmt = connection.prepareStatement(sql);  
 			if (params != null && !params.isEmpty()) {  
 			    for (int i = 0; i < params.size(); i++) {  
@@ -81,7 +83,6 @@ public class JdbcUtils {
         int index = 1; // 表示 占位符 ，从1开始 
         int value = -1;
         try {
-        	getConnection();
 			pstmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);  
 			if (params != null && !params.isEmpty()) {  
 			    for (int i = 0; i < params.size(); i++) {  
